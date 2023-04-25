@@ -77,5 +77,19 @@ app.post('/post', uploadMiddleware.single('file'), async (req,res) => {
     if (err) throw err;
     const {title,summary,content} = req.body;
     const postDoc = await Post.create({
-      
+      title,
+      summary,
+      content,
+      cover:newPath,
+      author:info.id,
+    });
+    res.json(postDoc);
+  });
+
+});
+
+app.put('/post',uploadMiddleware.single('file'), async (req,res) => {
+  let newPath = null;
+  if (req.file) {
+    const {originalname,path} = req.file;
   
